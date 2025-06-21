@@ -1,12 +1,14 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RolesModule } from './api/roles/roles.module';
+import { ClinicsModule } from './api/clinics/clinics.module';
+import { PaymentsModule } from './api/payments/payments.module';
+
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    envFilePath: '.env',
-    isGlobal: true
-  }),
+  imports: [
 TypeOrmModule.forRoot({
   type: 'postgres',
   host: process.env.PG_HOST,
@@ -18,6 +20,9 @@ TypeOrmModule.forRoot({
   autoLoadEntities: true,
   entities: []
 }),
+RolesModule,
+ClinicsModule,
+PaymentsModule
 ]
 })
 export class AppModule {}
