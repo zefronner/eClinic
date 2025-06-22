@@ -1,28 +1,29 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminEntity } from 'src/core/entities/admin.entity';
 import { AdminModule } from './admin/admin.module';
 import { PatientProfileModule } from './patient_profile/patient_profile.module';
-import { PatientProfileEntity } from 'src/core/entities/patient_profile.entity';
-import config from 'src/config';
+import { config } from 'src/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { CacheModule } from '@nestjs/cache-manager';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    envFilePath: '.env',
-    isGlobal: true
-  }),
+  imports: [
 TypeOrmModule.forRoot({
   type: 'postgres',
-  host: config.PG_HOST,
-  port: config.PG_PORT,
-  username: config.PG_USER,
-  password: config.PG_PASS,
-  database: config.PG_DB,
+  url: config.DB_URL,
   synchronize: true,
   autoLoadEntities: true,
-  entities: [AdminEntity, PatientProfileEntity]
+  entities: ['dist/core/entity*.entity{.ts,.js}']
 }),
+ServeStaticModule.forRoot({
+  rootPath: join(__dirname, '..', '..', '..',   'base'),
+  serveRoot: '/api/v1/base'
+}),
+CacheModule.register({ isGlobal: true }),
+JwtModule.register({ global: true }),
   AdminModule,
   PatientProfileModule
 ]
