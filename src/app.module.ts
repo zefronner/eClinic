@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PrescriptionsModule } from './api/prescriptions/prescriptions.module';
+import { MedicalRecordsModule } from './api/medical_records/medical_records.module';
+import { AppointmentsModule } from './api/appointments/appointments.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -18,6 +21,9 @@ TypeOrmModule.forRoot({
   autoLoadEntities: true,
   entities: []
 }),
+PrescriptionsModule,
+MedicalRecordsModule,
+AppointmentsModule,
 ]
 })
 export class AppModule {}
