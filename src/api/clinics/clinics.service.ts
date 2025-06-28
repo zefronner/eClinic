@@ -14,7 +14,7 @@ export class ClinicsService {
 
   async create(dto: CreateClinicDto): Promise<Clinic> {
     const clinic = this.clinicRepo.create(dto);
-    return this.clinicRepo.save(clinic);
+    return await this.clinicRepo.save(clinic);
   }
 
   async findAll(): Promise<Clinic[]> {

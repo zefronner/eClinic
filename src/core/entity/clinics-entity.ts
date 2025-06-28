@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, DeleteDateColumn } from 'typeorm';
 // import { User } from 'src/api/users/entities/user.entity';
 
 @Entity('clinics')
@@ -21,11 +21,14 @@ export class Clinic {
   @Column({ type: 'varchar' })
   region: string;
 
-  @Column({ type: 'varchar' })
-  is_active: string;
+  @Column({ type: 'boolean' , default: true})
+  is_active: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
+  
+  @DeleteDateColumn()  
+  deletedAt?: Date;
 
 //   @OneToMany(() => User, user => user.clinic)
 //   users: User[];

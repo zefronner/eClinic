@@ -2,7 +2,6 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RolesModule } from './api/roles/roles.module';
 import { ClinicsModule } from './api/clinics/clinics.module';
 import { PaymentsModule } from './api/payments/payments.module';
 
@@ -20,9 +19,8 @@ TypeOrmModule.forRoot({
   autoLoadEntities: true,
   entities: []
 }),
-RolesModule,
 ClinicsModule,
-PaymentsModule
+PaymentsModule,
 ]
 })
 export class AppModule {}
